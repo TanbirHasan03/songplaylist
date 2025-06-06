@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Favorite Playlist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff1f1 0%, #ffd6e7 50%, #f0e6ff 100%);
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+        .song-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.25);
+        }
+        .equalizer {
+            display: flex;
+            align-items: flex-end;
+            height: 20px;
+            width: 50px;
+        }
+        .bar {
+            width: 4px;
+            margin: 0 1px;
+            background: linear-gradient(to top, #ff88cc, #ffaad5);
+            animation: equalize 1s infinite;
+        }
+        @keyframes equalize {
+            0% { height: 3px; }
+            50% { height: 15px; }
+            100% { height: 3px; }
+        }
+        .typing {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .15em solid #d946ef;
+            width: fit-content;
+            margin: 0 auto;
+            animation: typing 2.8s steps(60, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #d946ef; }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-10">
+            <h1 class="text-5xl font-bold mb-3 text-pink-600 font-serif">My Favorite Playlist</h1>
+            <p class="text-lg text-purple-700 italic max-w-2xl mx-auto font-light typing">Every beat, every lyric, every moment - these songs are a part of us.</p>
+        </div>
+
+        <div class="mb-8 max-w-md mx-auto">
+            <div class="glass rounded-full px-5 py-3 flex items-center shadow-lg">
+                <i class="fas fa-search text-pink-400 mr-3"></i>
+                <input type="text" id="search" placeholder="Find your song..." class="bg-transparent w-full focus:outline-none placeholder-pink-300 text-pink-600">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="song-container"></div>
+
+        <div class="flex justify-center mt-12">
+            <a href="https://facebook.com/TanbirHasan30" target="_blank">
+                <button class="bg-pink-500 hover:bg-pink-600 text-white rounded-full px-6 py-3 flex items-center justify-center shadow-lg transition-all hover:transform hover:scale-105">
+                    <i class="fas fa-plus mr-2"></i> Add New Song
+                </button>
+            </a>
+        </div>
+    </div>
+
+<script>
+    const songs = [
+        { title: "7 Years", artist: "Lukas Graham" },
+        { title: "Fairytale", artist: "Alexander Rybak" },
+        { title: "Tum Mere Ho", artist: "Anuv Jain" },
+        { title: "Raabta", artist: "Arijit Singh" },
+        { title: "Jo Tu Na Mila", artist: "Asim Azhar" },
+        { title: "Love Me Like You", artist: "Ellie Goulding" },
+        { title: "Finding Her", artist: "Kushagra" },
+        { title: "Heat Waves", artist: "Glass Animals" },
+        { title: "Is This Love", artist: "Shreya" },
+        { title: "Jaavedan Hai", artist: "Suzanne" },
+        { title: "Deewana Kar Raha Hai", artist: "Jaed Ali" },
+        { title: "Kya Mujhe Pyar Hai", artist: "KK" },
+        { title: "Die with a Smile", artist: "Lady Gaga" },
+        { title: "Laree Choote", artist: "Call" },
+        { title: "Mann Mera", artist: "Gajendra Verma" },
+        { title: "Mat Aazma Re", artist: "Ankur Tewari" },
+        { title: "Teri Kahani Hai", artist: "Na Kar Deewana" },
+        { title: "Paro", artist: "Aditya Rikhari" },
+        { title: "Phir Bhi Aas Lagi Hai", artist: "Unknown" },
+        { title: "Piya Aaye Ne Aashiqui", artist: "Aditya Roy" },
+        { title: "Teri Yaad", artist: "Aditya Rikhari" },
+        { title: "Toota Jo Kabhi Tara", artist: "Atif Aslam" },
+        { title: "Tum Todo Na", artist: "Unknown" },
+        { title: "Yaariyaan", artist: "Mohan Kanan" },
+    ];
+
+    const container = document.getElementById('song-container');
+
+    songs.forEach((song, index) => {
+        const songCard = document.createElement('div');
+        songCard.className = "song-card glass p-5 relative overflow-hidden";
+        songCard.innerHTML = `
+            <div class="song-thumbnail mb-4 relative">
+                <img src="${index + 1}.jpg" alt="${song.title}" class="w-full h-40 object-cover rounded-2xl">
+                <div class="absolute inset-0 bg-black bg-opacity-30 rounded-2xl flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                    <button class="play-btn bg-pink-500 hover:bg-pink-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg transition-all">
+                        <i class="fas fa-play text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="song-details">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-xl font-bold text-pink-600">${song.title}</h3>
+                    <div class="equalizer hidden">
+                        <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                    </div>
+                </div>
+                <p class="text-purple-500 mb-3 text-sm">${song.artist}</p>
+                <audio class="hidden" src="${index + 1}.mp3"></audio>
+            </div>
+            <div class="mt-3 pt-3 border-t border-pink-100 flex justify-end items-center">
+                <button class="text-pink-500 hover:text-pink-700">
+                    <i class="fas fa-heart mr-1"></i> Favorite
+                </button>
+            </div>
+        `;
+
+        container.appendChild(songCard);
+    });
+
+    // Play/Pause functionality
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('.play-btn')) {
+            const btn = e.target.closest('.play-btn');
+            const card = btn.closest('.song-card');
+            const audio = card.querySelector('audio');
+            const equalizer = card.querySelector('.equalizer');
+            const isPlaying = !audio.paused;
+            document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+            document.querySelectorAll('.equalizer').forEach(eq => eq.classList.add('hidden'));
+            document.querySelectorAll('.play-btn i').forEach(i => i.classList.replace('fa-pause', 'fa-play'));
+            if (!isPlaying) {
+                audio.play();
+                equalizer.classList.remove('hidden');
+                btn.querySelector('i').classList.replace('fa-play', 'fa-pause');
+            }
+        }
+    });
+
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase();
+        document.querySelectorAll('.song-card').forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const artist = card.querySelector('p').textContent.toLowerCase();
+            if (title.includes(searchTerm) || artist.includes(searchTerm)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+</script>
+</body>
+</html>
