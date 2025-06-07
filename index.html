@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Favorite Playlist</title>
+  <title>My PlayList</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <meta name="theme-color" content="#d946ef">
   <style>
     body {
       background: linear-gradient(135deg, #fff1f1 0%, #ffd6e7 50%, #f0e6ff 100%);
@@ -64,7 +67,7 @@
   <div class="container mx-auto px-4 py-8">
     <div class="text-center mb-10">
       <h1 class="text-5xl font-bold mb-3 text-pink-600 font-serif">My Favorite Playlist</h1>
-      <p class="text-lg text-purple-700 italic max-w-2xl mx-auto font-light typing">Feel every beat, every lyric, every moment</p>
+      <p class="text-lg text-purple-700 italic max-w-2xl mx-auto font-light typing">Feel every beat, every lyric, every moment...</p>
     </div>
 
     <div class="mb-8 max-w-md mx-auto">
@@ -200,6 +203,17 @@ searchInput.addEventListener('input', function () {
     card.style.display = (title.includes(searchTerm) || artist.includes(searchTerm)) ? 'block' : 'none';
   });
 });
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').then(function (registration) {
+      console.log('ServiceWorker registered with scope:', registration.scope);
+    }, function (err) {
+      console.log('ServiceWorker registration failed:', err);
+    });
+  });
+}
 </script>
 </body>
 </html>
